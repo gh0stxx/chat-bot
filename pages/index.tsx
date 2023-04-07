@@ -10,7 +10,9 @@ export default function Home() {
 
   const [quote, setQuote] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [loadError, setError] = useState(false);
+
+
 
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -23,7 +25,7 @@ export default function Home() {
 
     if (prompt) {
       try {
-        setQuote('');
+        setQuote("");
         setError(false);
         setLoading(true);
 
@@ -31,13 +33,14 @@ export default function Home() {
         const body = await res.json();
         setQuote(body.quote);
 
-        const { quote } = await res.json();
-        setQuote(quote);
+        
+
       } catch (error) {
         console.error(error);
         setError(true);
       } finally {
         setLoading(false);
+
       }
     }
   }
@@ -54,7 +57,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Tyr Bot</h1>
         <h2>powered by GPT-3</h2>
-        <div>"Seeking wisdom from Tyr is like asking a sword for advice - it may be sharp and powerful, but it lacks the nuance and understanding of a wise counselor."</div>
+        <div>Seeking wisdom from Tyr is like asking a sword for advice - it may be sharp and powerful, but it lacks the nuance and understanding of a wise counselor.</div>
         <div className={styles.mainImageContainer}>
           <Image
             src={mainImage}
@@ -76,7 +79,7 @@ export default function Home() {
 
         </Form>
         {loading && <Spinner animation='border' variant='dark' />}
-        {error && <div>There was an error</div>}
+        {loadError && "There was an error"}
         {quote && <h5>{quote}</h5>}
       </main>
     </>

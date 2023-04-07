@@ -15,26 +15,24 @@ export default async function handler(
 
   const prompt = req.query.prompt;
 
-  if (prompt === undefined) {
-    res.status(400).json({ error: 'prompt is required' });
-    return;
+  if (!prompt) {
+    return res.status(400).json({ error: "Prompt missing" });
   }
 
   if (prompt.length > 100) {
-    res.status(400).json({ error: 'prompt is too long' });
-    return;
+    return res.status(400).json({ error: "Prompt too long" });
   }
 
- const completion = await openai.createCompletion({
+  const completion = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: `Act as the noorse god of war Tyr and give advice on ${prompt}`,
+    prompt: `Act as the norse god of war Tyr and give advice on ${prompt}`,
     max_tokens: 500,
     temperature: 0.8,
     presence_penalty: 0,
     frequency_penalty: 0,
-    });
+  });
 
-    const quote = completion.data.choices[0].text;
+  const quote = completion.data.choices[0].text;
 
-    res.status(200).json({ quote: quote });
+  res.status(200).json({ quote });
 }
